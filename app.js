@@ -612,12 +612,30 @@ function setupInteractions() {
     });
   }
 
-  // Print Page / Resume View trigger
-  const printTrigger = document.getElementById("btn-print-resume");
-  if (printTrigger) {
-    printTrigger.addEventListener("click", (e) => {
-      e.preventDefault();
-      window.print();
+  // CV Dropdown Menu Handler
+  const dropdownBtn = document.getElementById("btn-cv-dropdown");
+  const dropdownMenu = document.getElementById("cv-dropdown-menu");
+  const chevron = document.getElementById("dropdown-chevron");
+
+  if (dropdownBtn && dropdownMenu) {
+    dropdownBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = dropdownMenu.classList.contains("opacity-100");
+      if (isOpen) {
+        dropdownMenu.classList.remove("opacity-100", "visible", "translate-y-0");
+        dropdownMenu.classList.add("opacity-0", "invisible", "translate-y-2");
+        if (chevron) chevron.style.transform = "rotate(0deg)";
+      } else {
+        dropdownMenu.classList.remove("opacity-0", "invisible", "translate-y-2");
+        dropdownMenu.classList.add("opacity-100", "visible", "translate-y-0");
+        if (chevron) chevron.style.transform = "rotate(180deg)";
+      }
+    });
+
+    document.addEventListener("click", () => {
+      dropdownMenu.classList.remove("opacity-100", "visible", "translate-y-0");
+      dropdownMenu.classList.add("opacity-0", "invisible", "translate-y-2");
+      if (chevron) chevron.style.transform = "rotate(0deg)";
     });
   }
 }

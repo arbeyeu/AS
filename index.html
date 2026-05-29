@@ -84,17 +84,31 @@
         <a href="#contact" class="hover:text-white transition-colors">Contact</a>
       </nav>
 
-      <!-- Action Button & Socials -->
-      <div class="flex items-center gap-3">
+      <!-- Action Buttons & Dropdown -->
+      <div class="flex items-center gap-3 relative">
         <a href="https://linkedin.com/in/abhijeetsalve" target="_blank" class="btn-print-hide w-9 h-9 rounded-lg border border-white/10 hover:border-brand-blue bg-white/5 hover:bg-brand-blue/10 flex items-center justify-center text-slate-400 hover:text-white transition-all" title="LinkedIn">
           <i data-lucide="linkedin" class="w-4 h-4"></i>
         </a>
         <a href="mailto:abhijeetsalve777@outlook.com" class="btn-print-hide w-9 h-9 rounded-lg border border-white/10 hover:border-brand-cyan bg-white/5 hover:bg-brand-cyan/10 flex items-center justify-center text-slate-400 hover:text-white transition-all" title="Email">
           <i data-lucide="mail" class="w-4 h-4"></i>
         </a>
-        <button id="btn-print-resume" onclick="window.print()" class="btn-print-hide text-xs md:text-sm font-semibold border border-white/10 hover:border-brand-blue bg-white/5 hover:bg-brand-blue/10 px-4 py-2 rounded-lg transition-all flex items-center gap-2">
-          <i data-lucide="printer" class="w-4 h-4"></i> Print CV
-        </button>
+        
+        <!-- CV Dropdown Button -->
+        <div class="relative btn-print-hide" id="cv-dropdown-container">
+          <button id="btn-cv-dropdown" class="text-xs md:text-sm font-semibold border border-white/10 hover:border-brand-blue bg-white/5 hover:bg-brand-blue/10 px-4 py-2 rounded-lg transition-all flex items-center gap-2">
+            <i data-lucide="file-text" class="w-4 h-4 text-brand-blue"></i> Get Resume <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform duration-300" id="dropdown-chevron"></i>
+          </button>
+          
+          <!-- Dropdown Options Menu -->
+          <div id="cv-dropdown-menu" class="absolute right-0 mt-2 w-48 rounded-xl border border-white/10 bg-brand-black/95 backdrop-blur-lg shadow-2xl p-1.5 opacity-0 invisible translate-y-2 transition-all duration-300 z-50">
+            <button onclick="window.print()" class="w-full text-left text-xs md:text-sm text-slate-300 hover:text-white hover:bg-white/5 px-3.5 py-2.5 rounded-lg transition-colors flex items-center gap-2">
+              <i data-lucide="printer" class="w-4 h-4 text-cyan-400"></i> Print Web CV
+            </button>
+            <a href="media/cv.png" download="Abhijeet_Salve_CV.png" class="w-full text-left text-xs md:text-sm text-slate-300 hover:text-white hover:bg-white/5 px-3.5 py-2.5 rounded-lg transition-colors flex items-center gap-2">
+              <i data-lucide="download" class="w-4 h-4 text-purple-400"></i> Download Original CV
+            </a>
+          </div>
+        </div>
       </div>
     </div>
     <!-- Scroll Depth Progress Indicator -->
