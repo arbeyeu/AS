@@ -237,23 +237,19 @@ function initCustomCursor() {
     return;
   }
 
-  // Mouse Move Event Listener
+  // Pre-set percentage translations for cursor centering
+  gsap.set(cursor, { xPercent: -50, yPercent: -50 });
+  const xTo = gsap.quickTo(cursor, "x", { duration: 0.08, ease: "power3.out" });
+  const yTo = gsap.quickTo(cursor, "y", { duration: 0.08, ease: "power3.out" });
+
+  // Mouse Move Event Listener (highly optimized)
   window.addEventListener("mousemove", (e) => {
-    const { clientX, clientY } = e;
+    xTo(e.clientX);
+    yTo(e.clientY);
 
-    // Direct position for inner dot
-    gsap.to(cursor, {
-      x: clientX,
-      y: clientY,
-      xPercent: -50,
-      yPercent: -50,
-      duration: 0.1,
-      ease: "power2.out"
-    });
-
-    // Spotlight follows custom coordinates
-    document.documentElement.style.setProperty("--x", `${clientX}px`);
-    document.documentElement.style.setProperty("--y", `${clientY}px`);
+    // Spotlight follows custom coordinates via CSS variables
+    document.documentElement.style.setProperty("--x", `${e.clientX}px`);
+    document.documentElement.style.setProperty("--y", `${e.clientY}px`);
   });
 
   // Hover Effect for interactive links
@@ -261,11 +257,11 @@ function initCustomCursor() {
   interactives.forEach(el => {
     el.addEventListener("mouseenter", () => {
       cursor.classList.add("hovering");
-      gsap.to(cursor, { scale: 1.5, duration: 0.2 });
+      gsap.to(cursor, { scale: 1.5, duration: 0.2, overwrite: "auto" });
     });
     el.addEventListener("mouseleave", () => {
       cursor.classList.remove("hovering");
-      gsap.to(cursor, { scale: 1, duration: 0.2 });
+      gsap.to(cursor, { scale: 1, duration: 0.2, overwrite: "auto" });
     });
   });
 }
@@ -284,17 +280,17 @@ function initThreeBackground() {
   const scene = new THREE.Scene();
 
   // Camera
-  const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-  camera.position.z = 30;
+  const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
+  camera.position.z = 35;
 
   // Renderer
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
   renderer.setSize(width, height);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); // Performance cap
   container.appendChild(renderer.domElement);
 
   // Particles Configuration
-  const particleCount = 1000;
+  const particleCount = 800; // Optimized count
   const geometry = new THREE.BufferGeometry();
   const positions = new Float32Array(particleCount * 3);
   const colors = new Float32Array(particleCount * 3);
@@ -303,58 +299,44 @@ function initThreeBackground() {
   const colorPurple = new THREE.Color("#a21caf");
   const colorCyan = new THREE.Color("#00f0ff");
 
-  // Grid / Field layout
-  const rows = 40;
-  const cols = 25;
-  const spacingX = 1.2;
-  const spacingY = 1.2;
+  // Distribute particles inside a 3D spiral cylindrical nebula
+  for (let i = 0; i < particleCount; i++) {
+    const theta = Math.random() * Math.PI * 2;
+    const radius = 5 + Math.random() * 25;
+    const posX = Math.cos(theta) * radius;
+    const posY = (Math.random() - 0.5) * 45;
+    const posZ = Math.sin(theta) * radius;
 
-  let index = 0;
-  for (let x = 0; x < rows; x++) {
-    for (let y = 0; y < cols; y++) {
-      if (index >= particleCount) break;
+    positions[i * 3] = posX;
+    positions[i * 3 + 1] = posY;
+    positions[i * 3 + 2] = posZ;
 
-      // Center layout around 0
-      const posX = (x - rows / 2) * spacingX;
-      const posY = (y - cols / 2) * spacingY;
-      const posZ = 0;
-
-      positions[index * 3] = posX;
-      positions[index * 3 + 1] = posY;
-      positions[index * 3 + 2] = posZ;
-
-      // Color gradients based on grid coordinates
-      let mixColor = new THREE.Color();
-      const mixRatio = (x / rows) * 0.5 + (y / cols) * 0.5;
-      
-      if (mixRatio < 0.4) {
-        mixColor.copy(colorBlue).lerp(colorCyan, mixRatio * 2.5);
-      } else {
-        mixColor.copy(colorCyan).lerp(colorPurple, (mixRatio - 0.4) * 1.6);
-      }
-
-      colors[index * 3] = mixColor.r;
-      colors[index * 3 + 1] = mixColor.g;
-      colors[index * 3 + 2] = mixColor.b;
-
-      index++;
+    // Color gradient based on radius
+    let mixColor = new THREE.Color();
+    const ratio = radius / 30;
+    
+    if (ratio < 0.5) {
+      mixColor.copy(colorCyan).lerp(colorBlue, ratio * 2);
+    } else {
+      mixColor.copy(colorBlue).lerp(colorPurple, (ratio - 0.5) * 2);
     }
+
+    colors[i * 3] = mixColor.r;
+    colors[i * 3 + 1] = mixColor.g;
+    colors[i * 3 + 2] = mixColor.b;
   }
 
   geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
   geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
-  // Materials
-  // Using simple transparent circle texture
-  const textureLoader = new THREE.TextureLoader();
-  // Falling back to custom Canvas Texture for reliability without external assets
+  // Canvas Texture fallback for circles
   const canvasTexture = createCircleTexture();
 
   const material = new THREE.PointsMaterial({
-    size: 0.4,
+    size: 0.5,
     vertexColors: true,
     transparent: true,
-    opacity: 0.65,
+    opacity: 0.55,
     sizeAttenuation: true,
     map: canvasTexture,
     depthWrite: false,
@@ -365,56 +347,36 @@ function initThreeBackground() {
   const points = new THREE.Points(geometry, material);
   scene.add(points);
 
-  // Tilt/Rotation properties
+  // Parallax rotations
   let targetRotationX = 0;
   let targetRotationY = 0;
   let mouseX = 0;
   let mouseY = 0;
 
   window.addEventListener("mousemove", (e) => {
-    // Range: -0.5 to 0.5
     mouseX = (e.clientX / window.innerWidth) - 0.5;
     mouseY = (e.clientY / window.innerHeight) - 0.5;
   });
 
-  // Animation Loop
+  // Animation Loop (Silky smooth, 100% GPU accelerated matrix calculations)
   const clock = new THREE.Clock();
 
   function animate() {
     requestAnimationFrame(animate);
 
     const elapsedTime = clock.getElapsedTime();
-    const positionArray = geometry.attributes.position.array;
-
-    // Apply wave modulation
-    let idx = 0;
-    for (let x = 0; x < rows; x++) {
-      for (let y = 0; y < cols; y++) {
-        if (idx >= particleCount) break;
-
-        // Animate grid heights (Z coordinate) using dual-sine wave mapping
-        const posX = positionArray[idx * 3];
-        const posY = positionArray[idx * 3 + 1];
-
-        // Complex operational frequency simulation
-        const wave1 = Math.sin(posX * 0.12 + elapsedTime * 0.6) * 1.8;
-        const wave2 = Math.cos(posY * 0.18 + elapsedTime * 0.8) * 1.2;
-        const wave3 = Math.sin((posX + posY) * 0.08 + elapsedTime * 0.5) * 0.8;
-
-        positionArray[idx * 3 + 2] = wave1 + wave2 + wave3;
-
-        idx++;
-      }
-    }
-    geometry.attributes.position.needsUpdate = true;
 
     // Smooth hover camera rotation parallax
-    targetRotationX += (mouseY * 0.25 - targetRotationX) * 0.05;
-    targetRotationY += (mouseX * 0.25 - targetRotationY) * 0.05;
+    targetRotationX += (mouseY * 0.2 - targetRotationX) * 0.05;
+    targetRotationY += (mouseX * 0.2 - targetRotationY) * 0.05;
 
     points.rotation.x = targetRotationX;
-    points.rotation.y = targetRotationY;
-    points.rotation.z = elapsedTime * 0.015; // Slow ambient rotation
+    points.rotation.y = targetRotationY + elapsedTime * 0.03;
+    points.rotation.z = elapsedTime * 0.01;
+
+    // Add slow breathing pulse on the GPU
+    const scaleVal = 1 + Math.sin(elapsedTime * 0.4) * 0.05;
+    points.scale.set(scaleVal, scaleVal, scaleVal);
 
     renderer.render(scene, camera);
   }
