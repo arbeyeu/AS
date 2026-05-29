@@ -1,0 +1,476 @@
+/* -------------------------------------------------------------
+ * ABHIJEET SALVE - PORTFOLIO DESIGN SYSTEM
+ * ------------------------------------------------------------- */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --bg-primary: #050505;
+  --bg-secondary: #0c0c0e;
+  --accent-blue: #0066ff;
+  --accent-cyan: #00f0ff;
+  --accent-purple: #a21caf;
+  
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  
+  --card-bg: rgba(10, 10, 15, 0.55);
+  --card-border: rgba(255, 255, 255, 0.06);
+  --card-border-glow: rgba(0, 102, 255, 0.2);
+  --glass-blur: blur(16px);
+  
+  --cursor-size: 8px;
+  --cursor-spotlight: 400px;
+}
+
+/* Base Reset & Core Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  cursor: none !important; /* Hide native cursor for custom cursor experience */
+}
+
+@media (max-width: 1024px) {
+  * {
+    cursor: auto !important; /* Allow normal cursor on mobile */
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: var(--bg-primary);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', sans-serif;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-blue);
+}
+
+/* Background Canvas & Ambient Orbs */
+#canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.ambient-glow {
+  position: fixed;
+  width: 60vw;
+  height: 60vw;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(140px);
+  opacity: 0.12;
+  mix-blend-mode: screen;
+}
+
+.glow-blue {
+  top: -10%;
+  right: -10%;
+  background: radial-gradient(circle, var(--accent-blue) 0%, transparent 70%);
+  animation: floatGlow 20s infinite alternate ease-in-out;
+}
+
+.glow-purple {
+  bottom: -10%;
+  left: -10%;
+  background: radial-gradient(circle, var(--accent-purple) 0%, transparent 70%);
+  animation: floatGlow 25s infinite alternate-reverse ease-in-out;
+}
+
+@keyframes floatGlow {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(8%, 8%) scale(1.15); }
+}
+
+/* Custom Cursor & Mouse Spotlight Effect */
+#custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--cursor-size);
+  height: var(--cursor-size);
+  background: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, background-color 0.2s;
+  mix-blend-mode: difference;
+}
+
+#custom-cursor.hovering {
+  width: 24px;
+  height: 24px;
+  background-color: var(--accent-cyan);
+  mix-blend-mode: normal;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 15px var(--accent-cyan);
+}
+
+#mouse-spotlight {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    circle var(--cursor-spotlight) at var(--x, 0px) var(--y, 0px),
+    rgba(0, 102, 255, 0.05) 0%,
+    rgba(162, 27, 175, 0.02) 40%,
+    transparent 80%
+  );
+}
+
+/* Premium Card Architecture */
+.glass-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: 16px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--card-border-glow);
+  box-shadow: 0 12px 30px rgba(0, 102, 255, 0.08);
+}
+
+.glass-card:hover::before {
+  opacity: 1;
+}
+
+/* Hero Section Specifics */
+.profile-frame {
+  position: relative;
+  border-radius: 50%;
+  padding: 6px;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  box-shadow: 0 0 40px rgba(0, 102, 255, 0.25);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  aspect-ratio: 1 / 1;
+}
+
+.profile-frame:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 50px rgba(0, 240, 255, 0.4);
+}
+
+.profile-frame img {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 12%; /* Vertically offsets the vertical photo to center the face */
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.profile-frame:hover img {
+  transform: scale(1.05);
+}
+
+.profile-glow-ring {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple)) border-box;
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: destination-out;
+  animation: rotateGlowRing 8s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes rotateGlowRing {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Dynamic Timeline Design */
+.timeline-container {
+  position: relative;
+  border-left: 2px solid rgba(255, 255, 255, 0.08);
+  padding-left: 32px;
+  margin-left: 12px;
+}
+
+.timeline-node {
+  position: absolute;
+  left: -9px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--bg-primary);
+  border: 3px solid var(--accent-blue);
+  box-shadow: 0 0 10px var(--accent-blue);
+  transition: all 0.3s ease;
+}
+
+.timeline-card:hover .timeline-node {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 18px var(--accent-cyan);
+  transform: scale(1.2);
+}
+
+/* Dashboard Metric Animations */
+.metric-number {
+  background: linear-gradient(135deg, #fff 30%, var(--accent-cyan) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
+
+/* Skill Grid Rings */
+.skill-card {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.skill-progress-bar {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.skill-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+  width: 0; /* Animated dynamically with GSAP */
+  border-radius: 2px;
+  transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Loading Overlay */
+#loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-primary);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
+}
+
+.loader-logo {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  background: linear-gradient(135deg, #fff 40%, var(--accent-cyan) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 24px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.loader-bar {
+  width: 200px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+.loader-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue), var(--accent-cyan));
+  box-shadow: 0 0 10px var(--accent-cyan);
+}
+
+/* Sticky Header Styling */
+header {
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background-color 0.3s, padding 0.3s;
+}
+
+.scroll-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+}
+
+/* Contacts Form Elements */
+.input-field {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px 16px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 10px rgba(0, 102, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Contact Button Glow Effect */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-glow::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+  transform: scale(0);
+  transition: transform 0.5s ease-out;
+  pointer-events: none;
+}
+
+.btn-glow:hover::after {
+  transform: scale(1);
+}
+
+/* -------------------------------------------------------------
+ * PRINT / CV STYLES (Aesthetic, high-end clean print layout)
+ * ------------------------------------------------------------- */
+@media print {
+  * {
+    color: #111 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    cursor: auto !important;
+  }
+  
+  body {
+    background: #fff !important;
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+
+  header, footer, #canvas-container, .ambient-glow, #custom-cursor, #mouse-spotlight, #loader-overlay, .btn-print-hide {
+    display: none !important;
+  }
+
+  .glass-card {
+    border: none !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+    margin-bottom: 24px !important;
+    page-break-inside: avoid;
+  }
+
+  .timeline-container {
+    border-left: none !important;
+    padding-left: 0 !important;
+  }
+
+  .timeline-node {
+    display: none !important;
+  }
+
+  .grid {
+    display: block !important;
+  }
+
+  .skill-progress-bar {
+    border: 1px solid #ccc !important;
+    background: #eee !important;
+  }
+
+  .skill-progress-fill {
+    background: #444 !important;
+    width: inherit !important; /* Allow custom CSS print styles if standard properties */
+  }
+
+  h1, h2, h3, h4 {
+    page-break-after: avoid;
+    color: #000 !important;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 4px;
+    margin-top: 15px;
+  }
+  
+  a {
+    text-decoration: underline !important;
+  }
+
+  .page-break {
+    page-break-before: always;
+  }
+}

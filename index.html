@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Official executive portfolio of Abhijeet Salve - Team Leader - Operations. Operations Leader with expertise in Customer Service, Trust & Safety, Content Moderation, Business Operations, Data Analytics, and Process Excellence.">
+  <meta name="author" content="Abhijeet Salve">
+  <meta name="theme-color" content="#050505">
+  
+  <title>Abhijeet Salve | Team Leader - Operations</title>
+  
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              black: '#050505',
+              dark: '#0c0c0e',
+              blue: '#0066ff',
+              cyan: '#00f0ff',
+              purple: '#a21caf',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            outfit: ['Outfit', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Three.js (WebGL particles) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  
+  <!-- GSAP (Core & ScrollTrigger) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body class="bg-brand-black text-white">
+
+  <!-- Interactive Particles Canvas -->
+  <div id="canvas-container"></div>
+  
+  <!-- Ambient Radial Glow Blobs -->
+  <div class="ambient-glow glow-blue"></div>
+  <div class="ambient-glow glow-purple"></div>
+
+  <!-- Custom Cursor & Spotlight Overlay -->
+  <div id="custom-cursor"></div>
+  <div id="mouse-spotlight"></div>
+
+  <!-- 1. Interactive Loading Overlay -->
+  <div id="loader-overlay">
+    <div class="loader-logo">ABHIJEET SALVE</div>
+    <div class="loader-bar">
+      <div class="loader-progress"></div>
+    </div>
+    <p class="text-xs text-slate-500 uppercase tracking-widest mt-4">Initializing Portfolio Experience</p>
+  </div>
+
+  <!-- 2. Sticky Executive Navigation Bar -->
+  <header class="fixed top-0 left-0 w-full z-50 bg-brand-black/40 backdrop-blur-md border-b border-white/5 py-4">
+    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+      <a href="#hero" class="font-outfit text-xl font-extrabold tracking-wider bg-gradient-to-r from-white to-brand-cyan bg-clip-text text-transparent">
+        AS.OPERATIONS
+      </a>
+      
+      <!-- Nav Menu -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+        <a href="#about" class="hover:text-white transition-colors">About</a>
+        <a href="#skills" class="hover:text-white transition-colors">Skills</a>
+        <a href="#experience" class="hover:text-white transition-colors">Experience</a>
+        <a href="#achievements" class="hover:text-white transition-colors">Achievements</a>
+        <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+      </nav>
+
+      <!-- Action Button & Socials -->
+      <div class="flex items-center gap-3">
+        <a href="https://linkedin.com/in/abhijeetsalve" target="_blank" class="btn-print-hide w-9 h-9 rounded-lg border border-white/10 hover:border-brand-blue bg-white/5 hover:bg-brand-blue/10 flex items-center justify-center text-slate-400 hover:text-white transition-all" title="LinkedIn">
+          <i data-lucide="linkedin" class="w-4 h-4"></i>
+        </a>
+        <a href="mailto:abhijeetsalve777@outlook.com" class="btn-print-hide w-9 h-9 rounded-lg border border-white/10 hover:border-brand-cyan bg-white/5 hover:bg-brand-cyan/10 flex items-center justify-center text-slate-400 hover:text-white transition-all" title="Email">
+          <i data-lucide="mail" class="w-4 h-4"></i>
+        </a>
+        <button id="btn-print-resume" onclick="window.print()" class="btn-print-hide text-xs md:text-sm font-semibold border border-white/10 hover:border-brand-blue bg-white/5 hover:bg-brand-blue/10 px-4 py-2 rounded-lg transition-all flex items-center gap-2">
+          <i data-lucide="printer" class="w-4 h-4"></i> Print CV
+        </button>
+      </div>
+    </div>
+    <!-- Scroll Depth Progress Indicator -->
+    <div class="scroll-progress"></div>
+  </header>
+
+  <!-- 3. Hero Section (First Screen) -->
+  <section id="hero" class="min-h-screen flex items-center justify-center pt-24 px-6 relative overflow-hidden select-none">
+    <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <!-- Left Side: Interactive Glass Frame Image -->
+      <div class="lg:col-span-5 flex justify-center order-2 lg:order-1 relative profile-frame-container">
+        <div class="w-72 h-72 md:w-96 md:h-96 relative flex items-center justify-center">
+          <!-- Glassmorphism Container Frame -->
+          <div class="w-64 h-64 md:w-80 md:h-80 profile-frame z-10 p-2 overflow-hidden">
+            <div class="profile-glow-ring"></div>
+            <img class="meta-avatar select-none pointer-events-none" src="" alt="Abhijeet Salve">
+          </div>
+          <!-- Futuristic background nodes floating -->
+          <div class="absolute w-full h-full border border-white/5 rounded-full scale-110 pointer-events-none animate-pulse"></div>
+          <div class="absolute w-full h-full border border-brand-cyan/10 rounded-full scale-125 pointer-events-none animate-ping" style="animation-duration: 4s;"></div>
+        </div>
+      </div>
+
+      <!-- Right Side: Executive Info -->
+      <div class="lg:col-span-7 flex flex-col justify-center order-1 lg:order-2 text-center lg:text-left">
+        <span class="hero-designation text-xs md:text-sm font-bold uppercase tracking-widest text-brand-cyan mb-3 flex items-center justify-center lg:justify-start gap-2">
+          <span class="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
+          <span class="meta-designation">TEAM LEADER - OPERATIONS</span>
+        </span>
+        
+        <h1 class="hero-name font-outfit text-5xl md:text-7xl font-black tracking-tight text-white mb-4">
+          ABHIJEET SALVE
+        </h1>
+        
+        <h2 class="hero-headline font-outfit text-lg md:text-2xl font-semibold text-slate-300 mb-6 italic max-w-2xl leading-relaxed meta-headline">
+          "Leading Teams. Driving Performance. Delivering Results."
+        </h2>
+        
+        <p class="hero-desc text-sm md:text-base text-slate-400 leading-relaxed mb-8 max-w-2xl meta-bio">
+          Operations Leader with expertise in Customer Service, Trust & Safety, Content Moderation, Business Operations, Data Analytics, and Process Excellence.
+        </p>
+        
+        <!-- Call to Action Buttons -->
+        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4">
+          <a id="cv-download-btn" target="_blank" class="hero-btn text-sm font-bold bg-gradient-to-r from-brand-blue to-brand-cyan text-white hover:shadow-[0_0_20px_rgba(0,102,255,0.4)] px-6 py-3.5 rounded-xl transition-all flex items-center gap-2">
+            <i data-lucide="download" class="w-4 h-4"></i> Download Resume
+          </a>
+          
+          <a href="tel:+919987897905" id="contact-phone-link" class="hero-btn text-sm font-bold border border-white/10 hover:border-brand-purple bg-white/5 hover:bg-brand-purple/10 px-6 py-3.5 rounded-xl transition-all flex items-center gap-2">
+            <i data-lucide="phone-call" class="w-4 h-4 text-brand-purple"></i> Contact Me: <span id="contact-phone">+91 99878 97905</span>
+          </a>
+
+          <a href="https://linkedin.com/in/abhijeetsalve" target="_blank" class="hero-btn w-12 h-12 rounded-xl border border-white/10 hover:border-brand-blue bg-white/5 hover:bg-brand-blue/10 flex items-center justify-center text-slate-400 hover:text-white transition-all animate-pulse" title="LinkedIn" style="animation-duration: 3s;">
+            <i data-lucide="linkedin" class="w-5 h-5"></i>
+          </a>
+
+          <a href="mailto:abhijeetsalve777@outlook.com" class="hero-btn w-12 h-12 rounded-xl border border-white/10 hover:border-brand-cyan bg-white/5 hover:bg-brand-cyan/10 flex items-center justify-center text-slate-400 hover:text-white transition-all" title="Email">
+            <i data-lucide="mail" class="w-5 h-5"></i>
+          </a>
+          
+          <a href="#experience" class="hero-btn text-sm font-bold text-slate-400 hover:text-white px-4 py-3 flex items-center gap-1 transition-colors">
+            View Experience <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Operations Metrics / KPI Dashboard Grid -->
+  <section id="metrics" class="py-16 px-6 max-w-7xl mx-auto relative z-10">
+    <div id="metrics-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Generated dynamically in app.js -->
+    </div>
+  </section>
+
+  <!-- 5. Executive About / Bio Section -->
+  <section id="about" class="py-24 px-6 max-w-7xl mx-auto relative z-10">
+    <div class="glass-card p-8 md:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      
+      <!-- Headline & Philosophy -->
+      <div class="lg:col-span-4">
+        <span class="text-xs font-bold uppercase tracking-widest text-brand-cyan bg-blue-950/40 border border-blue-900/40 px-3.5 py-1.5 rounded-full">CORE VISION</span>
+        <h2 class="section-heading font-outfit text-3xl md:text-4xl font-extrabold mt-6 mb-4 text-white leading-tight">
+          Executive Leadership Philosophy
+        </h2>
+        <div class="h-1 w-20 bg-gradient-to-r from-brand-blue to-brand-cyan rounded"></div>
+      </div>
+      
+      <!-- Core summary text -->
+      <div class="lg:col-span-8 space-y-6 text-slate-400 text-sm md:text-base leading-relaxed">
+        <p>
+          In today’s hyper-connected digital landscape, operations aren't just about managing processes; they are about safeguarding user trust, fostering community safety, and driving sustainable client growth.
+        </p>
+        <p>
+          With over five years of dedicated experience scaling team environments for digital market leaders, I specialize in combining data-driven methodologies with human-centric team culture. By implementing tools like <strong class="text-brand-cyan">Power BI</strong> and <strong class="text-brand-blue">SAP</strong>, I convert complex operational metrics into transparent, actionable scorecards. This bridges the gap between organizational strategy and day-to-day employee execution.
+        </p>
+        <p>
+          My leadership approach focuses on transparency, rapid response management, and active risk mitigation. Whether navigating content moderations for millions of active users, or managing enterprise SLA deliverables for North American customer service lines, my goal is to build high-performance systems that thrive under scale.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Skills Grid -->
+  <section id="skills" class="py-24 px-6 max-w-7xl mx-auto relative z-10">
+    <div class="text-center mb-16">
+      <span class="text-xs font-bold uppercase tracking-widest text-brand-cyan bg-blue-950/40 border border-blue-900/40 px-3.5 py-1.5 rounded-full">COMPETENCIES</span>
+      <h2 class="section-heading font-outfit text-3xl md:text-5xl font-black mt-6 mb-4 text-white">
+        Core Operations Capabilities
+      </h2>
+      <p class="text-slate-400 text-sm md:text-base max-w-2xl mx-auto">
+        Structured proficiency tiers across leadership operations, visual analytics platforms, and regulatory compliance.
+      </p>
+    </div>
+
+    <div id="skills-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Generated dynamically in app.js -->
+    </div>
+  </section>
+
+  <!-- 7. Professional Experience Timeline -->
+  <section id="experience" class="py-24 px-6 max-w-4xl mx-auto relative z-10">
+    <div class="text-center mb-16">
+      <span class="text-xs font-bold uppercase tracking-widest text-brand-cyan bg-blue-950/40 border border-blue-900/40 px-3.5 py-1.5 rounded-full">TRACK RECORD</span>
+      <h2 class="section-heading font-outfit text-3xl md:text-5xl font-black mt-6 mb-4 text-white">
+        Professional Journey
+      </h2>
+      <p class="text-slate-400 text-sm md:text-base max-w-2xl mx-auto">
+        Chronological footprint directing international teams, moderations, and service excellence lines.
+      </p>
+    </div>
+
+    <!-- Timeline Wrapper -->
+    <div id="experience-timeline" class="timeline-container">
+      <!-- Generated dynamically in app.js -->
+    </div>
+  </section>
+
+  <!-- 8. Achievements Section -->
+  <section id="achievements" class="py-24 px-6 max-w-7xl mx-auto relative z-10">
+    <div class="text-center mb-16">
+      <span class="text-xs font-bold uppercase tracking-widest text-brand-purple bg-purple-950/40 border border-purple-900/40 px-3.5 py-1.5 rounded-full">MILESTONES</span>
+      <h2 class="section-heading font-outfit text-3xl md:text-5xl font-black mt-6 mb-4 text-white">
+        Awards & Recognitions
+      </h2>
+      <p class="text-slate-400 text-sm md:text-base max-w-2xl mx-auto">
+        Highlights of exceptional outcomes, executive reviews, and quality breakthroughs.
+      </p>
+    </div>
+
+    <div id="achievements-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Generated dynamically in app.js -->
+    </div>
+  </section>
+
+  <!-- 9. Education Timeline -->
+  <section id="education" class="py-24 px-6 max-w-4xl mx-auto relative z-10">
+    <div class="text-center mb-16">
+      <span class="text-xs font-bold uppercase tracking-widest text-brand-purple bg-purple-950/40 border border-purple-900/40 px-3.5 py-1.5 rounded-full">EDUCATION</span>
+      <h2 class="section-heading font-outfit text-3xl md:text-4xl font-extrabold mt-6 mb-4 text-white">
+        Academic Foundation
+      </h2>
+    </div>
+
+    <div id="education-timeline" class="timeline-container">
+      <!-- Generated dynamically in app.js -->
+    </div>
+  </section>
+
+  <!-- 10. Contact Section -->
+  <section id="contact" class="py-24 px-6 max-w-7xl mx-auto relative z-10">
+    <div class="text-center mb-16">
+      <span class="text-xs font-bold uppercase tracking-widest text-brand-cyan bg-blue-950/40 border border-blue-900/40 px-3.5 py-1.5 rounded-full">COLLABORATION</span>
+      <h2 class="section-heading font-outfit text-3xl md:text-5xl font-black mt-6 mb-4 text-white">
+        Initiate Operations Contact
+      </h2>
+      <p class="text-slate-400 text-sm md:text-base max-w-2xl mx-auto">
+        Ready to optimize operations, improve SLA metrics, or drive team performance. Let's start the conversation.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+      
+      <!-- Contact card info -->
+      <div class="lg:col-span-5 flex flex-col justify-between glass-card p-8 md:p-10 hover:shadow-[0_10px_30px_rgba(0,102,255,0.05)] transition-all">
+        <div>
+          <h3 class="font-outfit text-2xl font-bold mb-2 text-white">Abhijeet Salve</h3>
+          <p class="text-sm text-brand-cyan uppercase tracking-widest font-semibold mb-6">Team Leader - Operations</p>
+          
+          <div class="space-y-6">
+            
+            <a id="contact-phone-link-card" href="" class="flex items-center gap-4 text-slate-300 hover:text-white transition-colors group">
+              <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-brand-cyan group-hover:scale-110 transition-transform">
+                <i data-lucide="phone" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <span class="text-xs text-slate-500 uppercase tracking-widest block">Phone</span>
+                <span class="text-sm font-semibold select-all" id="contact-phone-card">+91 99878 97905</span>
+              </div>
+            </a>
+
+            <a id="contact-email-link-card" href="" class="flex items-center gap-4 text-slate-300 hover:text-white transition-colors group">
+              <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-brand-cyan group-hover:scale-110 transition-transform">
+                <i data-lucide="mail" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <span class="text-xs text-slate-500 uppercase tracking-widest block">Email</span>
+                <span class="text-sm font-semibold select-all" id="contact-email">abhijeetsalve777@outlook.com</span>
+              </div>
+            </a>
+
+            <a href="https://linkedin.com/in/abhijeetsalve" target="_blank" class="flex items-center gap-4 text-slate-300 hover:text-white transition-colors group">
+              <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-brand-cyan group-hover:scale-110 transition-transform">
+                <i data-lucide="linkedin" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <span class="text-xs text-slate-500 uppercase tracking-widest block">LinkedIn</span>
+                <span class="text-sm font-semibold select-all">linkedin.com/in/abhijeetsalve</span>
+              </div>
+            </a>
+
+            <div class="flex items-center gap-4 text-slate-300 group">
+              <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-brand-cyan">
+                <i data-lucide="map-pin" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <span class="text-xs text-slate-500 uppercase tracking-widest block">Location</span>
+                <span class="text-sm font-semibold leading-relaxed" id="contact-address">Mumbai, Maharashtra, India</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="pt-8 border-t border-white/5 mt-8 flex gap-4">
+          <a href="https://wa.me/919987897905" target="_blank" class="w-10 h-10 rounded-lg border border-white/10 hover:border-emerald-500 bg-white/5 hover:bg-emerald-500/10 flex items-center justify-center text-slate-400 hover:text-emerald-400 transition-all">
+            <i data-lucide="message-square" class="w-5 h-5"></i>
+          </a>
+          <a href="https://linkedin.com/in/abhijeetsalve" target="_blank" class="w-10 h-10 rounded-lg border border-white/10 hover:border-brand-blue bg-white/5 hover:bg-brand-blue/10 flex items-center justify-center text-slate-400 hover:text-brand-blue transition-all">
+            <i data-lucide="linkedin" class="w-5 h-5"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Contact email form -->
+      <div class="lg:col-span-7 glass-card p-8 md:p-10">
+        <form id="contact-form" class="space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label for="form-name" class="text-xs text-slate-500 uppercase tracking-widest font-semibold block mb-2">Full Name</label>
+              <input type="text" id="form-name" required class="input-field text-sm" placeholder="John Doe">
+            </div>
+            <div>
+              <label for="form-email" class="text-xs text-slate-500 uppercase tracking-widest font-semibold block mb-2">Email Address</label>
+              <input type="email" id="form-email" required class="input-field text-sm" placeholder="john@example.com">
+            </div>
+          </div>
+          <div>
+            <label for="form-subject" class="text-xs text-slate-500 uppercase tracking-widest font-semibold block mb-2">Subject</label>
+            <input type="text" id="form-subject" required class="input-field text-sm" placeholder="Operations Leadership Requirement">
+          </div>
+          <div>
+            <label for="form-message" class="text-xs text-slate-500 uppercase tracking-widest font-semibold block mb-2">Message</label>
+            <textarea id="form-message" rows="5" required class="input-field text-sm resize-none" placeholder="Describe your operational goals, timelines, or requirements..."></textarea>
+          </div>
+          <button type="submit" class="btn-glow w-full text-sm font-bold bg-gradient-to-r from-brand-blue to-brand-cyan text-white hover:shadow-[0_0_20px_rgba(0,102,255,0.3)] py-4 rounded-lg transition-all flex items-center justify-center gap-2">
+            <i data-lucide="send" class="w-4 h-4"></i> Dispatch Message
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 11. Footer -->
+  <footer class="border-t border-white/5 py-12 px-6 bg-brand-black/20 backdrop-blur-md relative z-10">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="text-center md:text-left">
+        <h3 class="font-outfit text-lg font-bold text-white tracking-wider">ABHIJEET SALVE</h3>
+        <p class="text-xs text-slate-500 mt-1 uppercase tracking-widest mb-3">Performance &bull; Operations &bull; Excellence</p>
+        <!-- Footer Social Links -->
+        <div class="flex justify-center md:justify-start gap-3">
+          <a href="https://linkedin.com/in/abhijeetsalve" target="_blank" class="w-8 h-8 rounded-lg border border-white/10 hover:border-brand-blue bg-white/5 hover:bg-brand-blue/10 flex items-center justify-center text-slate-400 hover:text-white transition-all" title="LinkedIn">
+            <i data-lucide="linkedin" class="w-4 h-4"></i>
+          </a>
+          <a href="mailto:abhijeetsalve777@outlook.com" class="w-8 h-8 rounded-lg border border-white/10 hover:border-brand-cyan bg-white/5 hover:bg-brand-cyan/10 flex items-center justify-center text-slate-400 hover:text-white transition-all" title="Email">
+            <i data-lucide="mail" class="w-4 h-4"></i>
+          </a>
+          <a href="https://wa.me/919987897905" target="_blank" class="w-8 h-8 rounded-lg border border-white/10 hover:border-emerald-500 bg-white/5 hover:bg-emerald-500/10 flex items-center justify-center text-slate-400 hover:text-emerald-400 transition-all" title="WhatsApp">
+            <i data-lucide="message-square" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-8 text-xs text-slate-400">
+        <a href="#about" class="hover:text-white transition-colors">About</a>
+        <a href="#skills" class="hover:text-white transition-colors">Skills</a>
+        <a href="#experience" class="hover:text-white transition-colors">Experience</a>
+        <a href="#achievements" class="hover:text-white transition-colors">Achievements</a>
+        <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+      </div>
+
+      <div class="text-xs text-slate-600 text-center md:text-right">
+        &copy; 2026 Abhijeet Salve. All Rights Reserved. Built with Premium Web Tech.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Connect Card Details & Link fallbacks via Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Sync links in card
+      const phone = cvData.profile.contact.phone;
+      const email = cvData.profile.contact.email;
+      document.getElementById("contact-phone-card").textContent = phone;
+      document.getElementById("contact-phone-link-card").href = `tel:${phone.replace(/\s+/g, '')}`;
+      document.getElementById("contact-email-link-card").href = `mailto:${email}`;
+    });
+  </script>
+  
+  <!-- Dynamic CV Data & App Initialization Script -->
+  <script src="cv-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
